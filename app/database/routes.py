@@ -1,8 +1,28 @@
 from flask import Blueprint, jsonify, request
 
 from app.database.summarize import summarize_row
+from app.database.translate import translate_row
 
 database_blueprint = Blueprint("database", __name__)
+
+
+@database_blueprint.route("/translate_row", methods=["POST"])
+def translate_row_handler():
+    if not request.is_json:
+        return jsonify({"error": "Missing payload in request"}), 400
+
+    data = request.get_json()
+    if not data:
+        raise ValueError("The payload is empty. Please provide a valid row.")
+
+    try:
+        resp = translate_row(data)
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+    return jsonify({"response": resp})
 
 
 @database_blueprint.route("/summarize_row", methods=["POST"])
@@ -33,6 +53,9 @@ def summarize_row_handler():
         return jsonify({"error": "Missing payload in request"}), 400
 
     data = request.get_json()
+
+    if not data:
+        raise ValueError("the row is empty. Please provide a valid row.")
 
     try:
         resp = summarize_row(data)

@@ -26,8 +26,6 @@ def summarize_row(
     - ValueError: If the provided row is empty.
     - Exception: For errors from the API or summarization process.
     """
-    if not row:
-        raise ValueError("The row is empty. Please provide a valid row.")
 
     # Setup for LangChain's OpenAI LLM with API key if provided
     llm = OpenAI(model_name=model_name)
