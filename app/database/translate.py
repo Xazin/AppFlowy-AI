@@ -29,21 +29,21 @@ def translate_row(
     Returns:
         The translated row data as a string.
     """
-    system_template = """
-    You are a assistant that translates input text to {language}. The output is array of strings. 
-    Parse as key/value in Json format.
+    system_prompt = """
+    You are an assistant that translates the input text to {language}. The results will be presented as key/value pairs
+    in {language} as JSON format. Here’s an example of how it works:
     
-    Example:
-    Input:  [“name: jack"]
-    Output: "姓名": "杰克"
+    example:
+    Input:{{"name: jack", "age: twelve"}}
+    Output:{{"姓名": "杰克", "年龄": "12"}}
     """
-    system_message_prompt = SystemMessagePromptTemplate.from_template(system_template)
+    system_prompt_template = SystemMessagePromptTemplate.from_template(system_prompt)
 
-    human_template = PromptTemplate(input_variables=["pairs"], template="{pairs}")
-    human_message_prompt = HumanMessagePromptTemplate(prompt=human_template)
+    human_prompt = PromptTemplate(input_variables=["pairs"], template="{pairs}")
+    human_prompt_template = HumanMessagePromptTemplate(prompt=human_prompt)
 
     chat_prompt = ChatPromptTemplate.from_messages(
-        [system_message_prompt, human_message_prompt]
+        [system_prompt_template, human_prompt_template]
     )
 
     chat = ChatOpenAI(temperature=0, model=model_name)
