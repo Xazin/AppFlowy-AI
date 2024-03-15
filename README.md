@@ -1,26 +1,24 @@
 # AppFlowy-AI
 
 ## Installation
+WIP
 
-```shell
-python -m venv venv
-source venv/bin/activate
+### Linting the code base:
 
-# For fish shell 
-# source .venv/bin/activate.fish
-
-# Install requirements
-pip install -r requirements.txt
+```sh
+# You should get no output (that means everything is operational).
+./run lint
 ```
 
-## Running the Tests
+#### Sorting Python imports in the code base:
 
-```shell
-pytest
+```sh
+./run format:imports
 ```
 
-## Other
+#### Formatting the code base:
 
-```shell
-pip freeze > requirements.txt
+```sh
+# You should see that everything is unchanged (it's all already formatted).
+./run format
 ```

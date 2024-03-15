@@ -37,9 +37,13 @@ def translate_row(
     Input:{{"name: jack", "age: twelve"}}
     Output:{{"姓名": "杰克", "年龄": "12"}}
     """
-    system_prompt_template = SystemMessagePromptTemplate.from_template(system_prompt)
+    system_prompt_template = SystemMessagePromptTemplate.from_template(
+        system_prompt
+    )
 
-    human_prompt = PromptTemplate(input_variables=["pairs"], template="{pairs}")
+    human_prompt = PromptTemplate(
+        input_variables=["pairs"], template="{pairs}"
+    )
     human_prompt_template = HumanMessagePromptTemplate(prompt=human_prompt)
 
     chat_prompt = ChatPromptTemplate.from_messages(
