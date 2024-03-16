@@ -1,5 +1,6 @@
+import json
 import logging
-from typing import Dict
+from typing import Dict, Any
 
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
@@ -10,14 +11,12 @@ from langchain_core.prompts import (
 )
 from langchain_openai import ChatOpenAI
 
-logger = logging.getLogger(__name__)
-
 
 def translate_row(
     row: Dict[str, str],
     model_name: str = "gpt-3.5-turbo-0613",
     language: str = "chinese",
-) -> str:
+) -> dict[str, Any]:
     """Translate a row of data using the specified model and language.
 
     Arguments:
@@ -54,6 +53,4 @@ def translate_row(
     chain = LLMChain(llm=chat, prompt=chat_prompt)
     pairs = [f"{key}: {value}" for key, value in row.items()]
     result = chain.invoke(input={"pairs": pairs, "language": language})
-    response = result.get("text", "")
-    logger.debug(f"response: {response}")
-    return response
+    return {"text": json.loads(result.get("text", ""))}

@@ -1,16 +1,15 @@
 import logging
-from typing import Dict
+from typing import Dict, Any
 
 from langchain.chains import LLMChain
 from langchain_openai import OpenAI
 from langchain.prompts import PromptTemplate
-
-logger = logging.getLogger(__name__)
+from pydantic import BaseModel
 
 
 def summarize_row(
     row: Dict[str, str], model_name: str = "gpt-3.5-turbo-instruct"
-) -> str:
+) -> dict[str, Any]:
     """
     Summarizes table row data using LangChain and a template.
 
@@ -44,8 +43,7 @@ def summarize_row(
     # Attempt to generate the summarization
     try:
         response = chain.run({"details": details})
-        summarization = response.strip()
-        return summarization
+        return {"text": response.strip()}
     except Exception as e:
         raise SummarizationError(e) from e
 

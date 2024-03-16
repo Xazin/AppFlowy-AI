@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, jsonify, request
 
 from app.database.summarize import summarize_row
@@ -16,13 +18,14 @@ def translate_row_handler():
         raise ValueError("The payload is empty. Please provide a valid row.")
 
     try:
-        resp = translate_row(data)
+        response = translate_row(data)
+        logging.debug(f"response: {response}")
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-    return jsonify({"data": resp})
+    return jsonify({"data": response})
 
 
 @database_blueprint.route("/summarize_row", methods=["POST"])
@@ -58,10 +61,11 @@ def summarize_row_handler():
         raise ValueError("the row is empty. Please provide a valid row.")
 
     try:
-        resp = summarize_row(data)
+        response = summarize_row(data)
+        logging.debug(f"response: {response}")
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-    return jsonify({"data": resp})
+    return jsonify({"data": response})
