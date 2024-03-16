@@ -18,7 +18,7 @@ def test_summarize_row(client):
     response = client.post("/summarize_row", json=data)
     assert response.status_code == 200
 
-    summary = response.get_json().get("response", "")
+    summary = response.get_json().get("data", "")
 
     # List of keywords you expect to be present in the summary
     expected_keywords = ["Jack", "25", "New York"]
@@ -34,7 +34,7 @@ def test_translate_row(client):
     response = client.post("/translate_row", json=data)
     assert response.status_code == 200
 
-    output_json = json.load(response.get_json().get("response", ""))
+    output_json = json.load(response.get_json().get("data", ""))
     expected_json = {"姓名": "杰克", "年龄": "25", "城市": "纽约"}
 
     # assert every key-value in expected_json is present in output_json

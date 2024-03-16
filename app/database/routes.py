@@ -22,7 +22,7 @@ def translate_row_handler():
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-    return jsonify({"response": resp})
+    return jsonify({"data": resp})
 
 
 @database_blueprint.route("/summarize_row", methods=["POST"])
@@ -64,4 +64,4 @@ def summarize_row_handler():
     except Exception as e:
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-    return jsonify({"response": resp})
+    return jsonify({"data": resp})
