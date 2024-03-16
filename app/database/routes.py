@@ -31,27 +31,21 @@ def translate_row_handler():
 @database_blueprint.route("/summarize_row", methods=["POST"])
 def summarize_row_handler():
     """
-    Handle requests to summarize table row data.
+    Summarizes table row data from POST requests.
 
-    This route accepts POST requests with JSON payloads representing a single row from a table. The row data is then
-    processed to generate a summary. The function expects the payload to match the expected schema for summarization
-    and returns a JSON response with the summary or an error message.
+    Accepts POST requests with JSON payloads of table rows, generating and returning a summary. The payload must be in the expected schema.
 
-    Payload Structure:
-    The JSON payload should contain key-value pairs corresponding to the columns and their values in the row to be
-    summarized.
+    Payload:
+    - Key-value pairs of table columns and their values.
 
     Responses:
-    - 200 OK: The request was successful, and the response body contains the summarized data.
-    - 400 Bad Request: The request was malformed, either because the payload was missing or the data did not meet
-      the expected schema.
-    - 500 Internal Server Error: An unexpected error occurred during the summarization process.
+    - 200 OK: Returns summary.
+    - 400 Bad Request: Payload missing or incorrect schema.
+    - 500 Internal Server Error: Unexpected error in summarization.
 
     Returns:
-        A Flask response object with a JSON body. The body contains either the summary under the "response" key for
-        successful requests or an error message under the "error" key for failed requests.
+    - JSON response with summary or error message.
     """
-
     if not request.is_json:
         return jsonify({"error": "Missing payload in request"}), 400
 

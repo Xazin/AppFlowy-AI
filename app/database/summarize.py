@@ -4,26 +4,24 @@ from typing import Dict, Any
 from langchain.chains import LLMChain
 from langchain_openai import OpenAI
 from langchain.prompts import PromptTemplate
-from pydantic import BaseModel
 
 
 def summarize_row(
     row: Dict[str, str], model_name: str = "gpt-3.5-turbo-instruct"
 ) -> dict[str, Any]:
     """
-    Summarizes table row data using LangChain and a template.
+    Summarizes a table row using LangChain with a specified template.
 
-    Parameters:
-    - row (Dict[str, str]): The table row to summarize, with column names as keys and their values as values.
-    - model_name (str): Model for summarization (default: "gpt-3.5-turbo-instruct").
-    - api_key (str): OpenAI API key (optional, uses environment's default if None).
+    Args:
+        row (Dict[str, str]): A mapping of column names to their values for summarization.
+        model_name (str, optional): The summarization model to use. Defaults to "gpt-3.5-turbo-instruct".
 
     Returns:
-    - str: Summary of the provided row.
+        dict: Contains the summarized text under {'data': {'text': 'Summarized text here.'}}.
 
     Raises:
-    - ValueError: If the provided row is empty.
-    - Exception: For errors from the API or summarization process.
+        ValueError: Raised if `row` is empty.
+        Exception: Raised for any errors during the API call or summarization process.
     """
 
     # Setup for LangChain's OpenAI LLM with API key if provided
@@ -42,8 +40,10 @@ def summarize_row(
 
     # Attempt to generate the summarization
     try:
-        response = chain.run({"details": details})
-        return {"text": response.strip()}
+        text = chain.run({"details": details}).strip()
+        response = {"text": text}
+        logging.debug(f"response: {response}")
+        return response
     except Exception as e:
         raise SummarizationError(e) from e
 
