@@ -24,7 +24,7 @@ def main():
     # Register blueprints
     app.register_blueprint(basic_blueprint)
     app.register_blueprint(database_blueprint)
-    app.run(debug=True, host='127.0.0.1')
+    app.run(debug=False, host=host, port=port)
 
 if __name__ == '__main__':
     main()
