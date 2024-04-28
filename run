@@ -39,7 +39,6 @@ function install_requirements {
   pip3 install -r requirements.txt
 }
 
-
 function start_server {
   flask run
 }

@@ -15,12 +15,15 @@ def summarize_row(
 
     Args:
         row (Dict[str, str]): A mapping of column names to their values
-        for summarization. model_name (str, optional): The summarization
-        model to use. Defaults to "gpt-3.5-turbo-instruct".
+        for summarization.
+        model_name (str, optional): The summarization model to use. Defaults
+        to "gpt-3.5-turbo-instruct".
 
     Returns:
-        dict: Contains the summarized text under {'data': {'text': 'Summarized
-        text here.'}}.
+        dict: A dictionary containing the summarized text. Example:
+        {
+            'data': {'text': 'Summarized text here.'}
+        }
 
     Raises:
         ValueError: Raised if `row` is empty.

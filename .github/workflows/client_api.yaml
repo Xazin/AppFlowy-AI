@@ -1,0 +1,56 @@
+name: Client-API Integrations
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+env:
+  RUST_TOOLCHAIN: "1.77"
+
+jobs:
+  test:
+    name: Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          override: true
+          components: rustfmt, clippy
+          profile: minimal
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            AppFlowy-AI-Client
+          key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-clippy-
+
+      - name: Copy and rename deploy.env to .env
+        run: cp env.example .env
+
+      - name: Replace values in .env
+        run: |
+          sed -i 's/OPENAI_API_KEY=.*/OPENAI_API_KEY=${{ secrets.CI_OPENAI_API_KEY }}/' .env
+
+      - name: Run Docker-Compose
+        run: |
+          docker compose -f docker-compose.yml up -d
+
+      - name: Run tests
+        working-directory: libs/appflowy-ai-client
+        run: |
+          cargo test
+
+      - name: Rustfmt
+        working-directory: libs/appflowy-ai-client
+        run: |
+          cargo fmt --check
+
+      - name: Clippy
+        working-directory: libs/appflowy-ai-client
+        run: cargo clippy --all-targets --all-features --tests -- -D warnings
