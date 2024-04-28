@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define the name of the server bundle.
-server_bundle_name="appflowy_ai_server"
+server_bundle_name="appflowy_ai"
 
 # Install PyInstaller for creating standalone executables.
-pip install pyinstaller
+pip freeze | grep PyInstaller || pip install pyinstaller
 
 # Install other dependencies from the requirements file.
 pip install -r requirements.txt
@@ -36,5 +36,9 @@ rm -rf dist/
 # Create a standalone executable using PyInstaller.
 pyinstaller --onefile --noconfirm --clean --name="$name" main.py
 
-# Inform the user of the successful bundle creation and provide the path.
-echo "🚀 Bundle successfully created, the binary is located at $(pwd)/dist/${name}"
+if [ -f "./dist/${name}" ]; then
+    echo "🚀 Bundle successfully created, the binary is located at $(pwd)/dist/${name}"
+else
+    echo "❌ Failed to create the bundle."
+    exit 1
+fi

@@ -1,9 +1,11 @@
 import logging
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
+from flask import jsonify
+from flask import request
 
-from database.summarize import summarize_row
-from database.translate import translate_row
+from app.database.summarize import summarize_row
+from app.database.translate import translate_row
 
 database_blueprint = Blueprint("database", __name__)
 
@@ -33,7 +35,8 @@ def summarize_row_handler():
     """
     Summarizes table row data from POST requests.
 
-    Accepts POST requests with JSON payloads of table rows, generating and returning a summary. The payload must be in the expected schema.
+    Accepts POST requests with JSON payloads of table rows, generating
+    and returning a summary. The payload must be in the expected schema.
 
     Payload:
     - Key-value pairs of table columns and their values.

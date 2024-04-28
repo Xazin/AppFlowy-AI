@@ -1,6 +1,5 @@
-import json
-
 import pytest
+
 from app import create_app
 
 
@@ -18,7 +17,8 @@ def test_summarize_row(client):
     assert response.status_code == 200
 
     text = response.get_json()["data"]["text"]
-    # the text will be something like: Jack is 25 years old and lives in New York
+    # the text will be something like: Jack is 25 years old and lives in New
+    # York
     assert text != ""
 
 

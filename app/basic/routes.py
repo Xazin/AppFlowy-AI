@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
+from flask import jsonify
 
 basic_blueprint = Blueprint("basic", __name__)
 

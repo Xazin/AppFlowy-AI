@@ -1,14 +1,12 @@
 import json
-import logging
-from typing import Dict, Any
+from typing import Any
+from typing import Dict
 
 from langchain.chains import LLMChain
-from langchain_core.prompts import (
-    SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
-    ChatPromptTemplate,
-    PromptTemplate,
-)
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import HumanMessagePromptTemplate
+from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import SystemMessagePromptTemplate
 from langchain_openai import ChatOpenAI
 
 
@@ -20,18 +18,22 @@ def translate_row(
     """Translate a row of data using the specified model and language.
 
     Arguments:
-        row: A dictionary representing a single row of data. The keys are the column names, and the values are the
-            corresponding cell values.
-        model_name: The name of the model to use for translation. Defaults to "gpt-3.5-turbo-0613".
-        language: The language to translate the row data to. Defaults to "english".
+        row: A dictionary representing a single row of data. The keys are the
+        column names, and the values are the corresponding cell values.
+
+        model_name: The name of the model to use for translation. Defaults to
+        "gpt-3.5-turbo-0613".
+
+        language: The language to translate the row data to. Defaults to
+        "english".
 
     Returns:
         The translated row data as a string.
     """
     system_prompt = """
-    You are an assistant that translates the input text to {language}. The results will be presented as key/value pairs
-    in {language} as JSON format. Here’s an example of how it works:
-    
+    You are an assistant that translates the input text to {language}. The
+    results will be presented as key/value pairs in {language} as JSON format.
+    Here’s an example of how it works:
     example:
     Input:{{"name: jack", "age: twelve"}}
     Output:{{"姓名": "杰克", "年龄": "12"}}

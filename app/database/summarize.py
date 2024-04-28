@@ -1,9 +1,10 @@
 import logging
-from typing import Dict, Any
+from typing import Any
+from typing import Dict
 
 from langchain.chains import LLMChain
-from langchain_openai import OpenAI
 from langchain.prompts import PromptTemplate
+from langchain_openai import OpenAI
 
 
 def summarize_row(
@@ -13,15 +14,18 @@ def summarize_row(
     Summarizes a table row using LangChain with a specified template.
 
     Args:
-        row (Dict[str, str]): A mapping of column names to their values for summarization.
-        model_name (str, optional): The summarization model to use. Defaults to "gpt-3.5-turbo-instruct".
+        row (Dict[str, str]): A mapping of column names to their values
+        for summarization. model_name (str, optional): The summarization
+        model to use. Defaults to "gpt-3.5-turbo-instruct".
 
     Returns:
-        dict: Contains the summarized text under {'data': {'text': 'Summarized text here.'}}.
+        dict: Contains the summarized text under {'data': {'text': 'Summarized
+        text here.'}}.
 
     Raises:
         ValueError: Raised if `row` is empty.
-        Exception: Raised for any errors during the API call or summarization process.
+        Exception: Raised for any errors during the API call or summarization
+        process.
     """
 
     # Setup for LangChain's OpenAI LLM with API key if provided
@@ -74,10 +78,12 @@ class SingleShotChain:
         Summarizes details using a template and a language model.
 
         Parameters:
-            details: A dictionary with keys as detail types and values as the actual details.
+            details: A dictionary with keys as detail types and values as the
+            actual details.
 
         Returns:
-            The summary produced by the language model, after processing with any specified preprocessors and postprocessors.
+            The summary produced by the language model, after processing with
+            any specified preprocessors and postprocessors.
         """
         for preprocessor in self.preprocessors:
             self.prompt = preprocessor(self.prompt)
