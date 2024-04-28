@@ -1,8 +1,8 @@
-use crate::entity::{SummarizeRow, TranslateRow};
+use crate::dto::{SummarizeRowResponse, TranslateRowResponse};
 use crate::error::AIError;
 use reqwest::{Method, RequestBuilder};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use serde_json::{Map, Value};
 use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
@@ -18,26 +18,33 @@ impl AppFlowyAIClient {
     Self { client, url }
   }
 
-  pub async fn summarize_row(&self, json: Value) -> Result<SummarizeRow, AIError> {
+  pub async fn summarize_row(
+    &self,
+    params: &Map<String, Value>,
+  ) -> Result<SummarizeRowResponse, AIError> {
+    if params.is_empty() {
+      return Err(AIError::InvalidRequest("Empty content".to_string()));
+    }
+
     let url = format!("{}/summarize_row", self.url);
     let resp = self
       .http_client(Method::POST, &url)?
-      .json(&json)
+      .json(params)
       .send()
       .await?;
-    AIResponse::<SummarizeRow>::from_response(resp)
+    AIResponse::<SummarizeRowResponse>::from_response(resp)
       .await?
       .into_data()
   }
 
-  pub async fn translate_row(&self, json: Value) -> Result<TranslateRow, AIError> {
+  pub async fn translate_row(&self, json: Value) -> Result<TranslateRowResponse, AIError> {
     let url = format!("{}/translate_row", self.url);
     let resp = self
       .http_client(Method::POST, &url)?
       .json(&json)
       .send()
       .await?;
-    AIResponse::<TranslateRow>::from_response(resp)
+    AIResponse::<TranslateRowResponse>::from_response(resp)
       .await?
       .into_data()
   }

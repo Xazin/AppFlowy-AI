@@ -42,7 +42,7 @@ Ensure that you have configured the .env file with the correct values and that t
 ````
 2. Run the tests:
 ```shell
-cd libs/appflowy-ai-client && cargo test
+cd appflowy-ai-client && cargo test
 ```
 
 ## Code Quality Tools

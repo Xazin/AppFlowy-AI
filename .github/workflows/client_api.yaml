@@ -42,15 +42,15 @@ jobs:
           docker compose -f docker-compose.yml up -d
 
       - name: Run tests
-        working-directory: libs/appflowy-ai-client
+        working-directory: appflowy-ai-client
         run: |
           cargo test
 
       - name: Rustfmt
-        working-directory: libs/appflowy-ai-client
+        working-directory: appflowy-ai-client
         run: |
           cargo fmt --check
 
       - name: Clippy
-        working-directory: libs/appflowy-ai-client
+        working-directory: appflowy-ai-client
         run: cargo clippy --all-targets --all-features --tests -- -D warnings

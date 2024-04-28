@@ -1,3 +1,3 @@
 pub mod client;
-mod entity;
+pub mod dto;
 pub mod error;

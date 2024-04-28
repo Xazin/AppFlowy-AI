@@ -106,6 +106,3 @@ class SummarizationError(Exception):
 
     def __str__(self):
         return f"summarization process: {str(self.original_exception)}"
-
-
-# Example usage
