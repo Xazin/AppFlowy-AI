@@ -25,7 +25,7 @@ impl From<reqwest::Error> for AIError {
       return if error.status() == Some(StatusCode::PAYLOAD_TOO_LARGE) {
         AIError::PayloadTooLarge(error.to_string())
       } else {
-        AIError::InvalidRequest(error.to_string())
+        AIError::InvalidRequest(format!("{:?}", error))
       };
     }
     AIError::Internal(error.into())

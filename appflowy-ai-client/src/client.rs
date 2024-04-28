@@ -4,6 +4,7 @@ use reqwest::{Method, RequestBuilder};
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use std::borrow::Cow;
+use tracing::info;
 
 #[derive(Clone, Debug)]
 pub struct AppFlowyAIClient {
@@ -13,6 +14,7 @@ pub struct AppFlowyAIClient {
 
 impl AppFlowyAIClient {
   pub fn new(url: &str) -> Self {
+    info!("Creating AppFlowyAIClient with url: {}", url);
     let url = url.to_string();
     let client = reqwest::Client::new();
     Self { client, url }
