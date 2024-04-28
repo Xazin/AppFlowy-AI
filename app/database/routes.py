@@ -2,8 +2,8 @@ import logging
 
 from flask import Blueprint, jsonify, request
 
-from app.database.summarize import summarize_row
-from app.database.translate import translate_row
+from database.summarize import summarize_row
+from database.translate import translate_row
 
 database_blueprint = Blueprint("database", __name__)
 
