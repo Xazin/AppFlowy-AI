@@ -15,3 +15,6 @@ tracing = "0.1"
 
 [dev-dependencies]
 tokio = { version = "1.37.0", features = ["macros", "test-util"] }
+
+[features]
+verbose_log = []

@@ -14,7 +14,7 @@ EXPOSE 5001
 # Define environment variable
 ARG FLASK_DEBUG="false"
 ENV FLASK_DEBUG="${FLASK_DEBUG}" \
-    FLASK_APP="hello.app" \
+    FLASK_APP="appflowy_ai.app" \
     FLASK_SKIP_DOTENV="true" \
     PYTHONUNBUFFERED="true"
 

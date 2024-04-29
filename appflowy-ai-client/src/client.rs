@@ -4,7 +4,7 @@ use reqwest::{Method, RequestBuilder};
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use std::borrow::Cow;
-use tracing::info;
+use tracing::{info, trace};
 
 #[derive(Clone, Debug)]
 pub struct AppFlowyAIClient {
@@ -29,6 +29,7 @@ impl AppFlowyAIClient {
     }
 
     let url = format!("{}/summarize_row", self.url);
+    trace!("summarize_row url: {}", url);
     let resp = self
       .http_client(Method::POST, &url)?
       .json(params)
@@ -41,6 +42,7 @@ impl AppFlowyAIClient {
 
   pub async fn translate_row(&self, json: Value) -> Result<TranslateRowResponse, AIError> {
     let url = format!("{}/translate_row", self.url);
+    trace!("translate_row url: {}", url);
     let resp = self
       .http_client(Method::POST, &url)?
       .json(&json)
