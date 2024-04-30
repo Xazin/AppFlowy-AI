@@ -3,6 +3,7 @@ from distutils.util import strtobool
 
 DEBUG = bool(strtobool(os.getenv("FLASK_DEBUG", "true")))
 
-SERVER_NAME = os.getenv(
-    "SERVER_NAME", "localhost:{0}".format(os.getenv("PORT", "5001"))
+SERVER_NAME = "{host}:{port}".format(
+    host=os.getenv("APPFLOWY_AI_SERVER_HOST", "localhost"),
+    port=os.getenv("APPFLOWY_AI_SERVER_PORT", "5001"),
 )
